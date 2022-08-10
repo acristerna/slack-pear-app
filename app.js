@@ -36,6 +36,7 @@ app.command("/pear", async ({ ack, body, client, logger }) => {
                 text: "Select users",
                 emoji: true,
               },
+              max_selected_items: 2,
               action_id: "multi_users_select-action",
             },
             label: {
@@ -136,12 +137,12 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     console.log(channelID);
   
     // const user = body.user.id;
-    const wins = view.state.values.wins["plain_text_input-action"].value;
+    const wins = providedValues.wins["plain_text_input-action"].value;
     const challenges =
-      view.state.values.challenges["plain_text_input-action"].value;
-    const goals = view.state.values.goals["plain_text_input-action"].value;
+    providedValues.challenges["plain_text_input-action"].value;
+    const goals = providedValues.goals["plain_text_input-action"].value;
     const users_selected =
-      view.state.values.users_selected["multi_users_select-action"]
+    providedValues.users_selected["multi_users_select-action"]
         .selected_users;
   
     console.log(users_selected);
@@ -151,7 +152,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
         channel: channelID,
         attachments: [
           {
-            color: "#a6f5aa",
+            color: "#92BC3D",
             blocks: [
               {
                 type: "header",
