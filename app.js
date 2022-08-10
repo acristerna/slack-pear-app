@@ -197,6 +197,59 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     }
   });
 
+  app.event("app_home_opened", async ({ event, client, context }) => {
+    try {
+      /* view.publish is the method that your app uses to push a view to the Home tab */
+      const result = await client.views.publish({
+        /* the user that opened your app's app home */
+        user_id: event.user,
+  
+        /* the view object that appears in the app home*/
+        view: {
+          type: "home",
+          callback_id: "home_view",
+  
+          /* body of the view */
+          blocks: [
+            {
+              type: "header",
+              text: {
+                type: "plain_text",
+                text: "This is Pear 🍐",
+              },
+            },
+            {
+              type: "divider",
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "Ever had a great pair programming session and wanted to share it with your team? Meet _Pear_, an automated Slackbot that allows you to share your wins, goals, and challenges for your daily or weekly pairings.",
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*How to interact:*",
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "Run the following command from any public channel or invite *@Pear* to your private one to get started. \n \n *`/pear [report]`* \n \n Your team can't wait to see your 'pear-fect' summaries!",
+              },
+            },
+          ],
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
 
 
 (async () => {
