@@ -7,7 +7,7 @@ const app = new App({
 });
 
 // Listen for a slash command invocation
-app.command("/pear", async ({ ack, body, client, logger }) => {
+app.command("/pear-report", async ({ ack, body, client, logger }) => {
   // Acknowledge the command request
   await ack();
 
@@ -198,6 +198,80 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     }
   });
 
+  app.command("/pear-random-pair", async ({ ack, body, client, logger }) => {
+    // Acknowledge the command request
+    await ack();
+  
+    const getRandomMember = (members) =>
+      members[Math.floor(Math.random() * members.length)];
+  
+    const getTwoRandomMembers = (members) => {
+      const member0 = getRandomMember(members);
+      const leftoverMembers = members.filter((member) => member !== member0);
+      const member1 = getRandomMember(leftoverMembers);
+      return [member0, member1];
+    };
+  
+    const getChannelId = async (channelName) => {
+      try {
+        const { channels } = await client.conversations.list();
+        return channels.find((channel) => channel.name === channelName).id;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    const slackChannel = "pairing-app";
+    const channelId = await getChannelId(slackChannel);
+  
+    const getMembers = async (channelId) => {
+      try {
+        const { members } = await client.conversations.members({
+          channel: channelId,
+        });
+        return members;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    const channelMembers = await getMembers(channelId);
+    console.log(channelMembers);
+  
+    const selectedPair = getTwoRandomMembers(channelMembers);
+    console.log(selectedPair);
+  
+    try {
+      await client.chat.postMessage({
+        channel: channelId,
+        attachments: [
+          {
+            color: "#92BC3D",
+            blocks: [
+              {
+                type: "header",
+                text: {
+                  type: "plain_text",
+                  text: "This week's pairs are...🥁",
+                },
+              },
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `<@${selectedPair[0]}> & <@${selectedPair[1]}>!`,
+                },
+              },
+            ],
+          },
+        ],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  
+
   app.event("app_home_opened", async ({ event, client, context }) => {
     try {
       /* view.publish is the method that your app uses to push a view to the Home tab */
@@ -250,8 +324,6 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
       console.error(error);
     }
   });
-
-
 
 (async () => {
   // Start your app
