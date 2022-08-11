@@ -1,4 +1,3 @@
-// Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 
 const app = new App({
@@ -6,20 +5,16 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
 
-// Listen for a slash command invocation
+// resonse to slash command for /pear-report
 app.command("/pear-report", async ({ ack, body, client, logger }) => {
-  // Acknowledge the command request
   await ack();
 
+  // opens modal for pair summary reports
   try {
-    // Call views.open with the built-in client
     const result = await client.views.open({
-      // Pass a valid trigger_id within 3 seconds of receiving it
       trigger_id: body.trigger_id,
-      // View payload
       view: {
         type: "modal",
-        // View identifier
         callback_id: "view_1",
         title: {
           type: "plain_text",
@@ -125,10 +120,11 @@ app.command("/pear-report", async ({ ack, body, client, logger }) => {
   }
 });
 
-
+// posted pair summary report in designated channel
 app.view("view_1", async ({ ack, body, view, client, logger }) => {
     await ack();
   
+    // gets provided information from modal payload and channel information
     const providedValues = view.state.values;
     const channelID =
       providedValues.target_channel.target_select.selected_conversation;
@@ -136,7 +132,6 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     console.log(providedValues);
     console.log(channelID);
   
-    // const user = body.user.id;
     const wins = providedValues.wins["plain_text_input-action"].value;
     const challenges =
     providedValues.challenges["plain_text_input-action"].value;
@@ -198,10 +193,14 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     }
   });
 
-  app.command("/pear-random-pair", async ({ ack, body, client, logger }) => {
-    // Acknowledge the command request
+  // response to slash command for /pear-random-report  
+   app.command("/pear-random-pair", async ({ ack, body, client, logger }) => {
     await ack();
   
+    /* gets channel id from slack channel name and also the channel member list,
+    takes members and grabs random member, 
+    gets another random member beside the first member to be used for pairing */
+
     const getRandomMember = (members) =>
       members[Math.floor(Math.random() * members.length)];
   
@@ -241,6 +240,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     const selectedPair = getTwoRandomMembers(channelMembers);
     console.log(selectedPair);
   
+    // posts message to channel for selected pairs
     try {
       await client.chat.postMessage({
         channel: channelId,
@@ -271,20 +271,14 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     }
   });
   
-
+// Pear home
   app.event("app_home_opened", async ({ event, client, context }) => {
     try {
-      /* view.publish is the method that your app uses to push a view to the Home tab */
       const result = await client.views.publish({
-        /* the user that opened your app's app home */
         user_id: event.user,
-  
-        /* the view object that appears in the app home*/
         view: {
           type: "home",
           callback_id: "home_view",
-  
-          /* body of the view */
           blocks: [
             {
               type: "header",
@@ -326,7 +320,6 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
   });
 
 (async () => {
-  // Start your app
   await app.start(process.env.PORT || 3000);
 
   console.log("⚡️ Bolt app is running!");
