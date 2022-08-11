@@ -4,7 +4,7 @@ Meet Pear, a simple pair programming Slack app that allows you to share your win
 
 Pear is built on the [Slack Platform](https://api.slack.com) with Slack's [Bolt Javascript](https://slack.dev/bolt-js/tutorial/getting-started) framework. 
 
-If you want to see the app in action, there's some screenshots below, or you can clone the repo and run it locally. 
+Your team can't wait to see your 'pear-fect' pairs and summaries!
 
 ## Setup
 
@@ -23,5 +23,3 @@ If you want to see the app in action, there's some screenshots below, or you can
 
 ### Output for Pair Summary Reports
 ![Output for Pair Summary Reports](./images/pearSummaryReportSample.png)
-
-Your team can't wait to see your 'pear-fect' pairs and summaries!
