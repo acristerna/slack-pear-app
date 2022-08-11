@@ -297,26 +297,26 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
               type: "divider",
             },
             {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: "Ever had a great pair programming session and wanted to share it with your team? Meet _Pear_, an automated Slackbot that allows you to share your wins, goals, and challenges for your daily or weekly pairings.",
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: "Ever had a great pair programming session and wanted to share it with your team? How about needing to generate a random pair for your next sprint? \n \n Meet _Pear_, an automated Slackbot that allows you to share your wins, goals, and challenges or create random pairs for your weekly pairings.",
+                },
               },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: "*How to interact:*",
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: "*How to interact:*",
+                },
               },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: "Run the following command from any public channel or invite *@Pear* to your private one to get started. \n \n *`/pear [report]`* \n \n Your team can't wait to see your 'pear-fect' summaries!",
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: "Run one of the following commands from any public channel or invite *@Pear* to your private one to get started. \n \n *`/pear-report`*: creates a new pair summary report \n *`/pear-random-pair`*: creates a random pairing from your channel's members \n \n Your team can't wait to see your 'pear-fect' pairs and summaries!",
+                },
               },
-            },
           ],
         },
       });
