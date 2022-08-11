@@ -1,0 +1,86 @@
+{
+    "display_information": {
+        "name": "Pear",
+        "description": "A pair programming bot",
+        "background_color": "#203620",
+        "long_description": "Meet Pear, an automated Slackbot that allows you to share your wins, goals, and challenges or create random pairs for your weekly pairings. Your team can't wait to see your 'pear-fect' pairs and summaries!"
+    },
+    "features": {
+        "app_home": {
+            "home_tab_enabled": true,
+            "messages_tab_enabled": true,
+            "messages_tab_read_only_enabled": false
+        },
+        "bot_user": {
+            "display_name": "Pear",
+            "always_online": false
+        },
+        "shortcuts": [
+            {
+                "name": "New Pairing Summary",
+                "type": "global",
+                "callback_id": "new_summary",
+                "description": "Creates a daily or weekly pairing summary "
+            }
+        ],
+        "slash_commands": [
+            {
+                "command": "/pear-report",
+                "url": "https://orchid-cuboid-dragonfruit.glitch.me/slack/events",
+                "description": "Launches pair summary reports",
+                "should_escape": false
+            },
+            {
+                "command": "/pear-random-pair",
+                "url": "https://orchid-cuboid-dragonfruit.glitch.me/slack/events",
+                "description": "Creates random pairs",
+                "should_escape": false
+            }
+        ]
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "app_mentions:read",
+                "channels:history",
+                "chat:write",
+                "chat:write.public",
+                "commands",
+                "groups:history",
+                "im:history",
+                "im:write",
+                "incoming-webhook",
+                "mpim:history",
+                "mpim:write",
+                "reminders:read",
+                "reminders:write",
+                "usergroups:read",
+                "users:read",
+                "channels:read",
+                "groups:read",
+                "mpim:read",
+                "im:read"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "request_url": "https://orchid-cuboid-dragonfruit.glitch.me/slack/events",
+            "bot_events": [
+                "app_home_opened",
+                "app_mention",
+                "message.channels",
+                "message.groups",
+                "message.im",
+                "message.mpim"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true,
+            "request_url": "https://orchid-cuboid-dragonfruit.glitch.me/slack/events"
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
+    }
+}
