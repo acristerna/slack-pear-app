@@ -211,7 +211,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
       return [member0, member1];
     };
   
-    const getChannelId = async (channelName) => {
+    const getChannelID = async (channelName) => {
       try {
         const { channels } = await client.conversations.list();
         return channels.find((channel) => channel.name === channelName).id;
@@ -221,12 +221,12 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     };
   
     const slackChannel = "pairing-app";
-    const channelId = await getChannelId(slackChannel);
+    const channelID = await getChannelID(slackChannel);
   
-    const getMembers = async (channelId) => {
+    const getMembers = async (channelID) => {
       try {
         const { members } = await client.conversations.members({
-          channel: channelId,
+          channel: channelID,
         });
         return members;
       } catch (error) {
@@ -234,7 +234,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
       }
     };
   
-    const channelMembers = await getMembers(channelId);
+    const channelMembers = await getMembers(channelID);
     console.log(channelMembers);
   
     const selectedPair = getTwoRandomMembers(channelMembers);
@@ -243,7 +243,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
     // posts message to channel for selected pairs
     try {
       await client.chat.postMessage({
-        channel: channelId,
+        channel: channelID,
         attachments: [
           {
             color: "#92BC3D",
