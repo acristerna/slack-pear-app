@@ -294,7 +294,7 @@ app.view("view_1", async ({ ack, body, view, client, logger }) => {
                 type: "section",
                 text: {
                   type: "mrkdwn",
-                  text: "Ever had a great pair programming session and wanted to share it with your team? How about needing to generate a random pair for your next sprint? \n \n Meet _Pear_, a simple Slack app that allows you to share your wins, goals, and challenges or create random pairs for your weekly pairings.",
+                  text: "Ever had a great pair programming session and wanted to share it with your team? How about needing to generate a random pair for your next sprint? \n \n Meet _Pear_, an simple Slack app that allows you to share your wins, challenges, and goals or create random pairs for your weekly pair programming sessions",
                 },
               },
               {
